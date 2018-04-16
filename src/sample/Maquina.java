@@ -24,205 +24,240 @@ public class Maquina {
         posicion = 0;
         estado = 0;
         char[] tempCharArray = cadena.toCharArray();
-        try {
             while(true){
                 salir = false;
-                if (estado == 0 && tempCharArray[posicion] == '1') {
-                    tempCharArray[posicion] = '1';
+                if (estado == 0 && tempCharArray[posicion] == '#') {
+                    tempCharArray[posicion] = '#';
+                    pasos.add("(q0, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q0, 1) -> (q0, 1, R)");
+                    cadena = String.valueOf(tempCharArray);
+                }
+                if (estado == 0 && tempCharArray[posicion] == '1') {
+                    tempCharArray[posicion] = '1';
+                    pasos.add("(q0, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
+                    posicion++;
+                    estado = 0;
+                    salir = true;
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 0 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = '0';
+                    pasos.add("(q0, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q0, 0) -> (q0, 0, R)");
+                    cadena = String.valueOf(tempCharArray);
+
                 }
                 if (estado == 0 && tempCharArray[posicion] == 'I') {
                     tempCharArray[posicion] = 'I';
+                    pasos.add("(q0, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q0, I) -> (q0, I, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 0 && tempCharArray[posicion] == 'O') {
                     tempCharArray[posicion] = 'O';
+                    pasos.add("(q0, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q0, O) -> (q0, O, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 0 && tempCharArray[posicion] == '-') {
                     tempCharArray[posicion] = '-';
+                    pasos.add("(q0, "+cadena+", "+posicion+") -> (q1, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 1;
                     salir = true;
-                    pasos.add("(q0, -) -> (q1, -, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 1 && tempCharArray[posicion] == '1') {
                     tempCharArray[posicion] = '1';
+                    pasos.add("(q1, "+cadena+", "+posicion+") -> (q1, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 1;
                     salir = true;
-                    pasos.add("(q1, 1) -> (q1, 1, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 1 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = '0';
+                    pasos.add("(q1, "+cadena+", "+posicion+") -> (q1, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 1;
                     salir = true;
-                    pasos.add("(q1, 0) -> (q1, 0, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 1 && tempCharArray[posicion] == 'B') {
                     tempCharArray[posicion] = 'B';
+                    pasos.add("(q1, "+cadena+", "+posicion+") -> (q2, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 2;
                     salir = true;
-                    pasos.add("(q1, B) -> (q2, B, L)");
+                    cadena = String.valueOf(tempCharArray);
+                }
+                if (estado == 2 && tempCharArray[posicion] == '#') {
+                    salir = false;
+                    pasos.add("Operación no valida");
+                    break;
                 }
                 if (estado == 2 && tempCharArray[posicion] == '-') {
-                    pasos.add("(q2, -) -> Final");
+                    pasos.add("(q2, "+cadena+", "+posicion+") -> Final");
                     this.cadena = String.valueOf(tempCharArray);
                     break;
                 }
                 if (estado == 2 && tempCharArray[posicion] == '1') {
                     tempCharArray[posicion] = 'B';
+                    pasos.add("(q2, "+cadena+", "+posicion+") -> (q3, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 3;
                     salir = true;
-                    pasos.add("(q2, 1) -> (q3, B, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 2 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = 'B';
+                    pasos.add("(q2, "+cadena+", "+posicion+") -> (q3, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 6;
                     salir = true;
-                    pasos.add("(q2, 0) -> (q3, B, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 3 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = '0';
+                    pasos.add("(q3, "+cadena+", "+posicion+") -> (q3, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 3;
                     salir = true;
-                    pasos.add("(q3, 0) -> (q3, 0, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 3 && tempCharArray[posicion] == '1') {
                     tempCharArray[posicion] = '1';
+                    pasos.add("(q3, "+cadena+", "+posicion+") -> (q3, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 3;
                     salir = true;
-                    pasos.add("(q3, 1) -> (q3, 1, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 3 && tempCharArray[posicion] == '-') {
                     tempCharArray[posicion] = '-';
+                    pasos.add("(q3, "+cadena+", "+posicion+") -> (q4, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 4;
                     salir = true;
-                    pasos.add("(q3, 1) -> (q4, -, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 4 && tempCharArray[posicion] == '1') {
                     tempCharArray[posicion] = 'O';
+                    pasos.add("(q4, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q4, 1) -> (q0, O, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 4 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = 'I';
+                    pasos.add("(q4, "+cadena+", "+posicion+") -> (q5, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 5;
                     salir = true;
-                    pasos.add("(q4, 0) -> (q5, I, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 4 && tempCharArray[posicion] == 'O') {
                     tempCharArray[posicion] = 'O';
+                    pasos.add("(q4, "+cadena+", "+posicion+") -> (q4, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 4;
                     salir = true;
-                    pasos.add("(q4, O) -> (q4, O, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 4 && tempCharArray[posicion] == 'I') {
                     tempCharArray[posicion] = 'I';
+                    pasos.add("(q4, "+cadena+", "+posicion+") -> (q4, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 4;
                     salir = true;
-                    pasos.add("(q4, I) -> (q4, I, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 5 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = '1';
+                    pasos.add("(q5, "+cadena+", "+posicion+") -> (q5, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 5;
                     salir = true;
-                    pasos.add("(q5, 0) -> (q5, 1, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 5 && tempCharArray[posicion] == '1') {
                     tempCharArray[posicion] = '0';
+                    pasos.add("(q5, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q5, 1) -> (q0, 0, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 6 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = '0';
+                    pasos.add("(q6, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 6;
                     salir = true;
-                    pasos.add("(q6, 0) -> (q0, 0, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 6 && tempCharArray[posicion] == '1') {
                     tempCharArray[posicion] = '1';
+                    pasos.add("(q6, "+cadena+", "+posicion+") -> (q6, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 6;
                     salir = true;
-                    pasos.add("(q6, 1) -> (q6, 1, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 6 && tempCharArray[posicion] == '-') {
                     tempCharArray[posicion] = '-';
+                    pasos.add("(q6, "+cadena+", "+posicion+") -> (q7, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 7;
                     salir = true;
-                    pasos.add("(q7, -) -> (q7, -, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 7 && tempCharArray[posicion] == '0') {
                     tempCharArray[posicion] = 'O';
+                    pasos.add("(q7, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q7, 0) -> (q0, O, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 7 && tempCharArray[posicion] == '1') {
                     tempCharArray[posicion] = 'I';
+                    pasos.add("(q7, "+cadena+", "+posicion+") -> (q0, "+String.valueOf(tempCharArray)+", R)");
                     posicion++;
                     estado = 0;
                     salir = true;
-                    pasos.add("(q7, 1) -> (q0, I, R)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 7 && tempCharArray[posicion] == 'O') {
                     tempCharArray[posicion] = 'O';
+                    pasos.add("(q7, "+cadena+", "+posicion+") -> (q7, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 7;
                     salir = true;
-                    pasos.add("(q7, O) -> (q7, O, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (estado == 7 && tempCharArray[posicion] == 'I') {
                     tempCharArray[posicion] = 'I';
+                    pasos.add("(q7, "+cadena+", "+posicion+") -> (q7, "+String.valueOf(tempCharArray)+", L)");
                     posicion--;
                     estado = 7;
                     salir = true;
-                    pasos.add("(q7, I) -> (q7, I, L)");
+                    cadena = String.valueOf(tempCharArray);
                 }
                 if (!salir) {
                     pasos.add("Operación no valida");
                     break;
                 }
             }
-        }catch (Exception e){
-            salir = false;
-            pasos.add("Operación no valida");
-        }
     }
     public String getResult(){
         String aux = cadena.split("-")[0];

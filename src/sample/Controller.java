@@ -28,7 +28,7 @@ public class Controller implements Initializable {
                 m.inicializar();
                 num2 = tOperacion.getText().split("-")[1];
                 num2 = m.binario(Integer.parseInt(num2));
-                cadena = num1+"-"+num2+"BB";
+                cadena = "#"+num1+"-"+num2+"BB";
                 m.resta(cadena);
                 if(m.isSalir()){
                     Alert msg=new Alert(Alert.AlertType.CONFIRMATION);
